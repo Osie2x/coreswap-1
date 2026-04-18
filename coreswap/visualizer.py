@@ -148,12 +148,12 @@ def build_wall_assembly_figure(
     fig.add_annotation(
         x=0.62,      # right end of arrow (paper coords)
         y=0.50,
-        ax=0.38,     # left end
-        ay=0.50,
+        ax=-80,      # pixel offset leftward for arrow tail
+        ay=0,
         xref="paper",
         yref="paper",
-        axref="paper",
-        ayref="paper",
+        axref="pixel",
+        ayref="pixel",
         text=arrow_label,
         showarrow=True,
         arrowhead=3,
