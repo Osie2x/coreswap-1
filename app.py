@@ -9,6 +9,8 @@ from coreswap.models import FactoryProfile
 from coreswap.extraction import extract_text_from_pdf, extract_text_from_txt, extract_epd_data_via_llm
 from coreswap.validation import validate_extraction
 from coreswap.lca import run_lca
+from coreswap.lca import compute_annual_emissions_tonnes, compute_insulated_sqft_per_home
+from coreswap.visualizer import build_wall_assembly_figure
 from coreswap.report import generate_narrative, render_pdf
 
 init_db()
@@ -199,6 +201,50 @@ elif page == PAGES[2]:
     with col3:
         st.metric("Annual Switch Benefit", f"{lca.annual_switch_benefit_tonnes:,.2f} t CO2e", delta="improvement")
         st.metric("50-Year Benefit", f"{lca.lifetime_switch_benefit_tonnes:,.2f} t CO2e")
+
+    st.divider()
+
+    # ── Wall Assembly Visualizer ────────────────────────────────────────────
+    st.subheader("Wall Assembly Visualizer")
+    st.caption(
+        "Explore how changing insulation GWP or comparing against alternatives "
+        "shifts embodied carbon across your annual build volume."
+    )
+
+    _COMPARE_OPTIONS = {
+        "Cellulose (-0.73)": ("Cellulose", -0.73),
+        "Fiberglass (0.70)": ("Fiberglass", 0.70),
+        "Mineral Wool (0.60)": ("Mineral Wool", 0.60),
+    }
+
+    viz_col1, viz_col2 = st.columns([3, 2])
+    with viz_col1:
+        whatif_gwp = st.slider(
+            "What-if: override current insulation GWP (kg CO\u2082e/sqft)",
+            min_value=-2.0,
+            max_value=6.0,
+            step=0.1,
+            value=float(round(lca.current_gwp_per_sqft, 1)),
+        )
+    with viz_col2:
+        compare_choice = st.radio(
+            "Compare against",
+            list(_COMPARE_OPTIONS.keys()),
+            index=0,
+            horizontal=True,
+        )
+
+    _compare_label, _compare_gwp = _COMPARE_OPTIONS[compare_choice]
+    _current_label = p.current_insulation.replace("_", " ").title()
+
+    _viz_fig = build_wall_assembly_figure(
+        current_label=_current_label,
+        current_gwp=whatif_gwp,
+        compare_label=_compare_label,
+        compare_gwp=_compare_gwp,
+        profile=p,
+    )
+    st.plotly_chart(_viz_fig, use_container_width=True)
 
     st.divider()
 
