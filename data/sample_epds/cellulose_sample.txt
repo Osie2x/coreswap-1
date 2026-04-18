@@ -1,0 +1,75 @@
+ENVIRONMENTAL PRODUCT DECLARATION
+Type III EPD — ISO 14025 / EN 15804+A2
+
+Product: EcoFill Recycled Cellulose Loose-Fill and Dense-Pack Insulation
+Manufacturer: Canadian Cellulose Insulation Manufacturers Association (CIMA) — Industry Average EPD
+Address: Ottawa, ON, Canada
+EPD Program Operator: Environdec (The International EPD System)
+Registration Number: S-P-09921
+Issue Date: January 20, 2023
+Validity Date: January 20, 2028
+
+PRODUCT DESCRIPTION
+
+EcoFill is a loose-fill and dense-pack cellulose insulation manufactured from
+a minimum of 85% post-consumer recycled newsprint and other recovered paper
+fibres. The remaining constituents are non-halogenated fire retardants
+(ammonium sulphate and boric acid compounds, < 15% by mass). No formaldehyde,
+bleach, or synthetic binders are used in production.
+
+Recycled content: 85–90% post-consumer, 5–10% pre-consumer.
+
+This EPD represents an industry-average dataset for cellulose insulation
+manufactured by CIMA member companies in Canada, based on 2022 production data.
+
+DECLARED UNIT
+
+1 square metre of installed cellulose insulation at a nominal thermal resistance
+of RSI 3.52 (R-20 imperial) at typical dry-installed density of 48 kg/m³
+for dense-pack wall application, with a nominal installed thickness of 140 mm.
+
+SYSTEM BOUNDARIES: A1–A3 (Cradle to Gate)
+
+Biogenic Carbon Treatment: This EPD applies the approach of EN 15804+A2
+Annex B for biogenic carbon accounting. Carbon sequestered in the recycled
+paper fibre feedstock is included in A1 as a negative (storage) contribution.
+Re-release of stored biogenic carbon at end of life is outside the system
+boundary of this A1-A3 EPD.
+
+ENVIRONMENTAL INDICATORS — GLOBAL WARMING POTENTIAL
+
+                                          A1          A2         A3       A1-A3
+GWP-total (kg CO2e / declared unit)     -8.92        0.21       1.21      -7.50
+GWP-fossil (kg CO2e / declared unit)     0.18        0.21       1.21       1.60
+GWP-biogenic (kg CO2e / declared unit) -9.10         0.00       0.00      -9.10
+GWP-luluc (kg CO2e / declared unit)      0.00        0.00       0.00       0.00
+
+The A1-A3 total GWP is -7.50 kg CO2e per square metre at RSI 3.52 (R-20).
+
+The dominant term is GWP-biogenic of -9.10 kg CO2e/m², reflecting the temporary
+biogenic carbon storage in the recycled paper feedstock. The fossil GWP of
++1.60 kg CO2e/m² reflects energy use in shredding, treatment, and transport.
+The net total GWP is therefore negative: this product is a net carbon sink
+on a cradle-to-gate basis.
+
+This result is consistent with the CIMA BEAM (Building Environmental Assessment
+Methodology) dataset: mid-point industry estimate -7.85 kg CO2e/m².
+
+ADDITIONAL ENVIRONMENTAL INDICATORS
+
+Ozone Depletion Potential (ODP): < 1.0 × 10⁻⁹ kg CFC-11e / declared unit
+Acidification Potential (AP): 0.018 kg SO2e / declared unit
+Eutrophication Potential (EP): 0.0029 kg PO4e / declared unit
+Photochemical Ozone Creation (POCP): 0.0041 kg NMVOCe / declared unit
+Abiotic Resource Depletion — Fossil (ADPF): 22.4 MJ / declared unit
+
+THIRD-PARTY VERIFICATION
+
+Independent verification by Quantis International.
+Verifier: Marie-Claude Bouchard, M.Sc., LCA
+Verification date: December 12, 2022.
+Statement: The LCA and EPD conform to ISO 14040/44 and ISO 14025 requirements.
+
+CONTACT
+CIMA — Canadian Cellulose Insulation Manufacturers Association
+info@cellulose.ca | www.cellulose.ca

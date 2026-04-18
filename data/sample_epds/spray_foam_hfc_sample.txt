@@ -1,0 +1,82 @@
+ENVIRONMENTAL PRODUCT DECLARATION
+Type III EPD — ISO 14025 / EN 15804
+
+Product: ThermoSeal HFC-245fa Spray Polyurethane Foam Insulation
+Manufacturer: NorthShield Insulation Systems Inc.
+Address: 400 Industrial Parkway, Mississauga, ON, Canada
+EPD Program Operator: NSF International
+Registration Number: EPD-NSF-2021-0047
+Issue Date: March 15, 2021
+Validity Date: March 15, 2026
+
+PRODUCT DESCRIPTION
+
+ThermoSeal HFC-245fa is a two-component, closed-cell spray polyurethane foam (ccSPF)
+insulation system intended for residential and commercial wall, roof, and floor
+assemblies. The product is installed on-site by trained applicators.
+
+The blowing agent used is HFC-245fa (1,1,1,3,3-pentafluoropropane), a
+hydrofluorocarbon with a global warming potential of approximately 858 CO2e
+(100-year GWP, AR5).
+
+IMPORTANT NOTE ON BIOGENIC CARBON:
+This product contains no biogenic carbon content. The raw materials are
+entirely petroleum-derived. The biogenic carbon content is 0 kg CO2e per
+functional unit. Do not confuse this value with the total GWP figure below.
+
+DECLARED UNIT
+
+1 square metre of installed insulation at a nominal thermal resistance of
+RSI 3.52 (equivalent to R-20 imperial) and a typical installed thickness of
+approximately 89 mm (3.5 inches).
+
+SYSTEM BOUNDARIES: A1–A3 (Cradle to Gate)
+
+MODULE A1 — Raw Material Extraction and Processing
+Module A2 — Transport to Manufacturer
+Module A3 — Manufacturing
+
+Life Cycle Inventory data sourced from ecoinvent 3.9 database and
+manufacturer-verified primary data for the blowing agent component.
+
+ENVIRONMENTAL INDICATORS — GLOBAL WARMING POTENTIAL
+
+                                          A1         A2         A3       A1-A3
+GWP-total (kg CO2e / declared unit)     12.44       0.83      29.83      43.10
+GWP-fossil (kg CO2e / declared unit)    12.44       0.83      29.83      43.10
+GWP-biogenic (kg CO2e / declared unit)   0.00       0.00       0.00       0.00
+GWP-luluc (kg CO2e / declared unit)      0.00       0.00       0.00       0.00
+
+The A1-A3 total GWP is 43.10 kg CO2e per square metre at R-20 (RSI 3.52).
+
+Note: The dominant contributor to module A3 GWP is the HFC-245fa blowing agent,
+which has a 100-year GWP of 858 and is incorporated into the closed foam cells
+during manufacturing. Blowing agent emissions at end-of-life (module C) are
+outside the declared system boundary.
+
+ADDITIONAL ENVIRONMENTAL INDICATORS
+
+Ozone Depletion Potential (ODP): 0.0 kg CFC-11e / declared unit
+Acidification Potential (AP): 0.22 kg SO2e / declared unit
+Eutrophication Potential (EP): 0.018 kg PO4e / declared unit
+Photochemical Ozone Creation (POCP): 0.031 kg NMVOCe / declared unit
+Abiotic Resource Depletion — Fossil (ADPF): 342 MJ / declared unit
+
+THIRD-PARTY VERIFICATION
+
+This EPD was independently verified by Intertek Testing Services NA Ltd.
+Verifier: Dr. Sarah Kowalski, P.Eng., LCA Practitioner
+Verification Date: February 28, 2021
+Verification Statement: The LCA study and EPD are consistent with
+ISO 14040/44, ISO 14025, and EN 15804+A2 requirements.
+
+HEALTH AND SAFETY NOTE
+
+Isocyanate components (MDI) used in this product present occupational health
+hazards during application. Applicators must use supplied-air respirators.
+Refer to Safety Data Sheet ThermoSeal-SDS-2021-A for complete guidance.
+
+MANUFACTURER CONTACT
+NorthShield Insulation Systems Inc.
+epd@northshieldinsulation.ca
+www.northshieldinsulation.ca

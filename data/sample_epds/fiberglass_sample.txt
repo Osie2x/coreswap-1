@@ -1,0 +1,69 @@
+ENVIRONMENTAL PRODUCT DECLARATION
+Type III EPD — ISO 14025 / EN 15804+A2
+
+Product: GlassBatt R-20 Fiberglass Batt Insulation
+Manufacturer: Owens Corning Canada LP
+Address: 720 Doris Ave, Toronto, ON, Canada
+EPD Program Operator: UL Environment
+Registration Number: EPD-UL-2022-1183
+Issue Date: September 1, 2022
+Validity Date: September 1, 2027
+
+PRODUCT DESCRIPTION
+
+GlassBatt R-20 is a residential-grade mineral fiber batt insulation manufactured
+from a combination of recycled glass cullet (minimum 53% post-consumer recycled
+content) and virgin silica sand, bonded with a formaldehyde-free acrylic binder.
+The product is designed for friction-fit installation in 2x6 wood-frame wall
+cavities at nominal 5.5-inch thickness.
+
+DECLARED UNIT
+
+1 square metre of installed fiberglass batt insulation at a nominal thermal
+resistance of RSI 3.52 (R-20 imperial) and an installed thickness of 140 mm.
+
+SYSTEM BOUNDARIES: A1–A3 (Cradle to Gate)
+
+Modules A1 through A3 are included. Modules A4 through D are excluded from
+this declaration and are not included in totals.
+
+Life Cycle Inventory data sourced from the DATASMART US/CA database v4.2 and
+Owens Corning primary production data (2021 calendar year average).
+
+ENVIRONMENTAL INDICATORS — GLOBAL WARMING POTENTIAL
+
+                                          A1         A2         A3       A1-A3
+GWP-total (kg CO2e / declared unit)      3.21       0.28       4.01       7.50
+GWP-fossil (kg CO2e / declared unit)     3.19       0.28       4.00       7.47
+GWP-biogenic (kg CO2e / declared unit)   0.02       0.00       0.01       0.03
+GWP-luluc (kg CO2e / declared unit)      0.00       0.00       0.00       0.00
+
+The A1-A3 total GWP is 7.50 kg CO2e per square metre at RSI 3.52 (R-20).
+
+The primary contributors are: glass melting furnace energy (A3, 51%),
+raw silica extraction and transport (A1, 43%), and inbound freight (A2, 6%).
+The binder system contributes less than 1% to total GWP.
+
+ADDITIONAL ENVIRONMENTAL INDICATORS
+
+Ozone Depletion Potential (ODP): < 1.0 × 10⁻⁸ kg CFC-11e / declared unit
+Acidification Potential (AP): 0.041 kg SO2e / declared unit
+Eutrophication Potential (EP): 0.0044 kg PO4e / declared unit
+Photochemical Ozone Creation (POCP): 0.0088 kg NMVOCe / declared unit
+Abiotic Resource Depletion — Fossil (ADPF): 87.3 MJ / declared unit
+
+RECYCLED CONTENT
+
+Post-consumer recycled glass: 53% by mass
+Pre-consumer recycled glass: 8% by mass
+Total recycled content: 61% by mass
+
+THIRD-PARTY VERIFICATION
+
+This EPD was verified by LEED-accredited third-party verifier Pivot Engineering
+Group Inc., in accordance with ISO 14025 section 8.1.3 (independent verification).
+Verification date: August 15, 2022.
+
+CONTACT
+Owens Corning Canada LP — Sustainability Office
+sustainability@owenscorning.com
