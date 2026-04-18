@@ -106,61 +106,126 @@ elif page == PAGES[1]:
         st.stop()
 
     profile = st.session_state["profile"]
-    st.caption(f"Upload the EPD PDF for your current insulation: **{profile.current_insulation.replace('_',' ').title()}**")
 
-    uploaded = st.file_uploader("Upload EPD (PDF or TXT)", type=["pdf", "txt"])
+    # ── What is an EPD? ────────────────────────────────────────────────────
+    with st.expander("ℹ️  What is an EPD and where do I get one?", expanded=False):
+        st.markdown("""
+**EPD = Environmental Product Declaration**
 
-    if uploaded:
-        with st.spinner("Extracting text from document..."):
-            if uploaded.name.endswith(".pdf"):
-                raw_text = extract_text_from_pdf(uploaded.read())
-            else:
-                raw_text = extract_text_from_txt(uploaded.read())
+An EPD is a standardised document published by a product manufacturer that reports
+the environmental impact of their product — including its **Global Warming Potential (GWP)**,
+measured in kg CO₂e per unit. Think of it like a nutrition label, but for carbon.
 
-        st.success(f"Extracted {len(raw_text):,} characters from document.")
+**Where to download a free EPD for your insulation:**
+- [EC3 Tool (buildingtransparency.org)](https://buildingtransparency.org/ec3) — largest free database, filter by "Insulation"
+- [EPD International Library (environdec.com)](https://www.environdec.com/library) — global registry
+- Your insulation manufacturer's website — search "[brand name] EPD PDF"
 
-        with st.spinner("Extracting carbon data with AI..."):
-            try:
-                extracted = extract_epd_data_via_llm(raw_text, profile.current_insulation)
-            except Exception as e:
-                st.error(f"LLM extraction failed: {e}")
-                st.stop()
+**What file to upload here:**
+Upload the PDF your insulation manufacturer published. The AI will read it and
+extract the GWP number automatically. If you don't have a PDF, use the
+**"Enter GWP manually"** option below instead.
 
-        st.subheader("Extracted EPD Data")
-        col1, col2 = st.columns(2)
-        with col1:
-            st.write(f"**Product:** {extracted.product_name}")
-            st.write(f"**Manufacturer:** {extracted.manufacturer}")
-            st.write(f"**Declared Unit:** {extracted.declared_unit}")
-            st.write(f"**Confidence:** {extracted.extraction_confidence}")
-        with col2:
-            st.write(f"**Reference Standard:** {extracted.reference_standard or 'N/A'}")
-            st.write(f"**Validity Year:** {extracted.validity_year or 'N/A'}")
-            st.write(f"**Notes:** {extracted.extraction_notes}")
+**Typical GWP values by insulation type:**
+| Type | Typical GWP (kg CO₂e/sqft) |
+|---|---|
+| Spray Foam HFC | 3.0 – 5.5 (high emitter) |
+| Spray Foam HFO | 0.5 – 1.8 |
+| Fiberglass | 0.3 – 1.5 |
+| Mineral Wool | 0.3 – 1.2 |
+| Cellulose | −1.0 to −0.4 (carbon sink) |
+        """)
 
-        gwp = extracted.gwp_kg_co2e_per_sqft
-        st.metric("Extracted GWP", f"{gwp:.4f} kg CO2e / sq ft",
-                  help="Normalized to per square foot at the EPD's stated R-value.")
+    st.caption(f"Insulation type from your profile: **{profile.current_insulation.replace('_', ' ').title()}**")
 
-        with st.spinner("Validating extracted value..."):
-            validation = validate_extraction(extracted, profile.current_insulation)
+    # ── Input mode toggle ──────────────────────────────────────────────────
+    input_mode = st.radio(
+        "How do you want to enter your carbon data?",
+        ["Upload EPD document (PDF or TXT)", "Enter GWP manually (skip upload)"],
+        horizontal=True,
+    )
 
-        if validation.passed:
-            st.success(f"Validation passed. Value is within expected range {validation.expected_range} for {profile.current_insulation}.")
-            st.session_state["extracted_gwp"] = gwp
-            st.session_state["extracted"] = extracted
-        else:
-            st.error(f"Validation failed: {validation.flagged_reason}")
-            st.warning("You can override with a manual value, or re-upload the correct EPD.")
+    if input_mode == "Upload EPD document (PDF or TXT)":
+        uploaded = st.file_uploader("Upload your insulation EPD", type=["pdf", "txt"])
+
+        if uploaded:
+            with st.spinner("Reading document..."):
+                if uploaded.name.endswith(".pdf"):
+                    raw_text = extract_text_from_pdf(uploaded.read())
+                else:
+                    raw_text = extract_text_from_txt(uploaded.read())
+
+            st.success(f"Extracted {len(raw_text):,} characters from document.")
+
+            with st.spinner("AI is extracting the GWP value..."):
+                try:
+                    extracted = extract_epd_data_via_llm(raw_text, profile.current_insulation)
+                    extraction_ok = True
+                except Exception as e:
+                    st.error(f"AI extraction failed: {e}")
+                    st.warning("You can still continue — enter the GWP manually below.")
+                    extraction_ok = False
+                    extracted = None
+
+            if extraction_ok and extracted:
+                st.subheader("Extracted EPD Data")
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.write(f"**Product:** {extracted.product_name}")
+                    st.write(f"**Manufacturer:** {extracted.manufacturer}")
+                    st.write(f"**Declared Unit:** {extracted.declared_unit}")
+                    st.write(f"**Confidence:** {extracted.extraction_confidence}")
+                with col2:
+                    st.write(f"**Reference Standard:** {extracted.reference_standard or 'N/A'}")
+                    st.write(f"**Validity Year:** {extracted.validity_year or 'N/A'}")
+                    st.write(f"**Notes:** {extracted.extraction_notes}")
+
+                gwp = extracted.gwp_kg_co2e_per_sqft
+                st.metric("Extracted GWP", f"{gwp:.4f} kg CO₂e / sq ft")
+
+                validation = validate_extraction(extracted, profile.current_insulation)
+                if validation.passed:
+                    st.success(f"Value validated — within expected range {validation.expected_range} for {profile.current_insulation}.")
+                    st.session_state["extracted_gwp"] = gwp
+                    st.session_state["extracted"] = extracted
+                else:
+                    st.warning(f"Validation note: {validation.flagged_reason}")
+                    st.info("You can accept this value or override it below.")
+                    override = st.number_input("Override GWP (kg CO₂e / sq ft)", value=float(gwp), step=0.01)
+                    if st.button("Accept & Use This Value"):
+                        st.session_state["extracted_gwp"] = override
+                        st.session_state["extracted"] = extracted
+
+            if not extraction_ok:
+                st.subheader("Enter GWP manually")
+                manual_gwp = st.number_input(
+                    "GWP value from your EPD (kg CO₂e / sq ft)",
+                    min_value=-2.0, max_value=10.0,
+                    value=4.20, step=0.01,
+                    help="Find this number in your EPD under 'Global Warming Potential' or 'GWP', modules A1-A3."
+                )
+                if st.button("Use This Value →"):
+                    st.session_state["extracted_gwp"] = manual_gwp
+                    st.session_state["extracted"] = None
+
+    else:
+        # Manual entry path — no upload needed
+        st.info("Enter the GWP value directly from your insulation manufacturer's EPD or data sheet.")
+        col_m1, col_m2 = st.columns([2, 1])
+        with col_m1:
             manual_gwp = st.number_input(
-                "Manual GWP override (kg CO2e / sq ft)",
-                value=float(gwp), step=0.01
+                "GWP (kg CO₂e per sq ft) — find this in your EPD under 'Global Warming Potential', modules A1–A3",
+                min_value=-2.0, max_value=10.0,
+                value=4.20, step=0.01,
             )
-            if st.button("Use Manual Value"):
-                st.session_state["extracted_gwp"] = manual_gwp
-                st.session_state["extracted"] = extracted
-                st.success(f"Manual value {manual_gwp} accepted.")
+        with col_m2:
+            st.metric("Selected GWP", f"{manual_gwp:.2f} kg CO₂e/sqft")
+        if st.button("Use This Value →", key="manual_submit"):
+            st.session_state["extracted_gwp"] = manual_gwp
+            st.session_state["extracted"] = None
+            st.success("GWP saved. See the estimate below.")
 
+    # ── Emissions estimate + Run LCA ───────────────────────────────────────
     if "extracted_gwp" in st.session_state:
         st.divider()
         gwp = st.session_state["extracted_gwp"]
@@ -171,15 +236,14 @@ elif page == PAGES[1]:
         st.subheader("Annual Emissions Estimate")
         st.metric(
             label="Annual Embodied Carbon — Current Insulation",
-            value=f"{annual_tonnes:,.2f} tonnes CO2e",
-            delta=None,
+            value=f"{annual_tonnes:,.2f} tonnes CO₂e",
         )
-        st.caption(f"Based on {profile.annual_units} homes/yr × {insulated_sqft:,.0f} sq ft insulated/home × {gwp:.4f} kg CO2e/sq ft")
+        st.caption(f"Based on {profile.annual_units} homes/yr × {insulated_sqft:,.0f} sq ft insulated/home × {gwp:.4f} kg CO₂e/sq ft")
 
-        if st.button("Run LCA →", type="primary"):
+        if st.button("Run LCA & go to Switch Modeler →", type="primary"):
             lca = run_lca(profile, gwp)
             st.session_state["lca"] = lca
-            st.success("LCA complete. Navigate to Switch Modeler.")
+            st.success("LCA complete. Click '3. Switch Modeler' in the sidebar.")
 
 
 # ─── Page 3: Switch Modeler ────────────────────────────────────────────────

@@ -21,35 +21,23 @@ def extract_text_from_txt(content: Union[str, bytes]) -> str:
 
 
 def _extract_json(raw: str) -> dict:
-    """
-    Robustly pull a JSON object out of a model response.
-    Handles: plain JSON, ```json ... ```, ``` ... ```,
-    leading/trailing whitespace, newlines before the opening brace.
-    """
-    # 1. Strip markdown fences (handles newlines before/after the brace)
+    """Robustly pull a JSON object from a model response."""
     cleaned = re.sub(r"```(?:json)?", "", raw).strip()
-
-    # 2. Try to parse the whole cleaned string first
     try:
         return json.loads(cleaned)
     except json.JSONDecodeError:
         pass
-
-    # 3. Pull out the first {...} block as a fallback
     match = re.search(r"\{.*\}", cleaned, re.DOTALL)
     if match:
         return json.loads(match.group())
-
     raise ValueError(f"No valid JSON object found in model response:\n{raw[:300]}")
 
 
 def extract_epd_data_via_llm(raw_text: str, insulation_type: InsulationType) -> ExtractedEPDData:
-    # Truncate to ~12 000 chars so we stay within Groq context limits
     truncated = raw_text[:12000]
-
     system = EPD_EXTRACTION_SYSTEM.format(insulation_type=insulation_type)
     user = EPD_EXTRACTION_USER.format(epd_raw_text=truncated)
-
-    raw = chat(system=system, user=user, max_tokens=1024)
+    # json_mode=True forces Groq to return valid JSON — eliminates markdown wrapping
+    raw = chat(system=system, user=user, max_tokens=1024, json_mode=True)
     data = _extract_json(raw)
     return ExtractedEPDData(**data)
