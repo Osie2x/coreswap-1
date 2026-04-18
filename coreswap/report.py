@@ -1,6 +1,5 @@
 import os
 from datetime import datetime, timezone
-import anthropic
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
@@ -11,12 +10,12 @@ from reportlab.lib.enums import TA_LEFT, TA_CENTER
 from .config import REPORTS_DIR
 from .models import FactoryProfile, LCAResult
 from .prompts import REPORT_NARRATIVE_SYSTEM, REPORT_NARRATIVE_USER
+from .llm import chat
 
 FOREST_GREEN = colors.HexColor("#2C5F3E")
 
 
 def generate_narrative(lca: LCAResult) -> str:
-    client = anthropic.Anthropic()
     p = lca.profile
     user = REPORT_NARRATIVE_USER.format(
         company_name=p.company_name,
@@ -31,13 +30,7 @@ def generate_narrative(lca: LCAResult) -> str:
         carbon_credit_value_low_cad=lca.carbon_credit_value_low_cad,
         carbon_credit_value_high_cad=lca.carbon_credit_value_high_cad,
     )
-    message = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=1024,
-        system=REPORT_NARRATIVE_SYSTEM,
-        messages=[{"role": "user", "content": user}],
-    )
-    return message.content[0].text.strip()
+    return chat(system=REPORT_NARRATIVE_SYSTEM, user=user, max_tokens=1024)
 
 
 def render_pdf(profile: FactoryProfile, lca: LCAResult, narrative: str, report_id: int) -> str:

@@ -12,6 +12,7 @@ from coreswap.lca import run_lca
 from coreswap.lca import compute_annual_emissions_tonnes, compute_insulated_sqft_per_home
 from coreswap.visualizer import build_wall_assembly_figure
 from coreswap.report import generate_narrative, render_pdf
+from coreswap.llm import active_provider_label
 
 init_db()
 
@@ -23,6 +24,7 @@ PAGES = ["1. Factory Profile", "2. Carbon Baseline", "3. Switch Modeler", "4. ES
 with st.sidebar:
     st.title("CORESWAP")
     st.caption("Embodied Carbon Advisory")
+    st.caption(f"LLM: {active_provider_label()}")
     page = st.radio("Navigation", PAGES, key="nav_page")
     st.divider()
     st.subheader("Past Reports")
