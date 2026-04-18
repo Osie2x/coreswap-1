@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 import anthropic
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -32,7 +32,7 @@ def generate_narrative(lca: LCAResult) -> str:
         carbon_credit_value_high_cad=lca.carbon_credit_value_high_cad,
     )
     message = client.messages.create(
-        model="claude-sonnet-4-5",
+        model="claude-sonnet-4-6",
         max_tokens=1024,
         system=REPORT_NARRATIVE_SYSTEM,
         messages=[{"role": "user", "content": user}],
@@ -66,7 +66,7 @@ def render_pdf(profile: FactoryProfile, lca: LCAResult, narrative: str, report_i
     story.append(Paragraph("Embodied Carbon Advisory Report", ParagraphStyle("Sub", parent=heading2, textColor=colors.black)))
     story.append(Spacer(1, 6))
     story.append(Paragraph(f"Prepared for: {profile.company_name}", normal))
-    story.append(Paragraph(f"Date: {datetime.utcnow().strftime('%B %d, %Y')}", normal))
+    story.append(Paragraph(f"Date: {datetime.now(timezone.utc).strftime('%B %d, %Y')}", normal))
     story.append(Paragraph(f"Report ID: {report_id}", normal))
     story.append(HRFlowable(width="100%", thickness=1, color=FOREST_GREEN, spaceAfter=12))
 

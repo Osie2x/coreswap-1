@@ -1,7 +1,7 @@
 import sqlite3
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from .config import DB_PATH
 from .models import FactoryProfile, LCAResult, ReportRecord
 
@@ -28,7 +28,7 @@ def init_db():
 
 
 def save_report(profile: FactoryProfile, lca: LCAResult, narrative: str, pdf_path: str) -> int:
-    now = datetime.utcnow().isoformat()
+    now = datetime.now(timezone.utc).isoformat()
     with _conn() as con:
         cur = con.execute(
             "INSERT INTO reports (created_at, company_name, profile_json, lca_json, narrative, pdf_path) VALUES (?,?,?,?,?,?)",

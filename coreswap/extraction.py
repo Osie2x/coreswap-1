@@ -24,7 +24,7 @@ def extract_epd_data_via_llm(raw_text: str, insulation_type: InsulationType) -> 
     user = EPD_EXTRACTION_USER.format(epd_raw_text=raw_text)
 
     message = client.messages.create(
-        model="claude-sonnet-4-5",
+        model="claude-sonnet-4-6",
         max_tokens=1024,
         system=system,
         messages=[{"role": "user", "content": user}],

@@ -245,8 +245,7 @@ elif page == PAGES[2]:
     )
 
     if st.button("Generate ESG Report →", type="primary"):
-        st.session_state["nav_page"] = PAGES[3]
-        st.rerun()
+        st.info("Navigate to ESG Report in the sidebar to continue.")
 
 
 # ─── Page 4: ESG Report ────────────────────────────────────────────────────
